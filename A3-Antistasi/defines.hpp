@@ -5,6 +5,7 @@
 
 //Other Includes
 #include "functions\Garage\defineGarage.inc"
+#include "Collections\defines.hpp"
 
 // Control types
 #define CT_STATIC           0
