@@ -1,6 +1,6 @@
 /*
 Function:
-    col_map_fnc_setG
+    col_fnc_map_setG
 
 Description:
     Sets values of specified keys in a UID entry;
@@ -21,10 +21,10 @@ Returns:
 Examples:
     private _keyPairs = [ ["test","frost"], ["420",69], ["bob","ban"] ];
     private _UID = "123";
-    [_UID,_keyPairs] call col_map_fnc_setG; // In UID "123": Sets values of key "test" to "frost" and "420" to 69
+    [_UID,_keyPairs] call col_fnc_map_setG; // In UID "123": Sets values of key "test" to "frost" and "420" to 69
 
 Author: Caleb Serafin
-Date Updated: 12 June 2020
+Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 #include "..\..\defines.hpp"
@@ -32,7 +32,7 @@ params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keyPairs",[],[ [] ]]
 ];
-private _filename = "Collections\Map\Generic\setG.sqf";
+private _filename = "Collections\Map\Generic\map_setG.sqf";
 
 if (_keyPairs isEqualTo []) exitWith {
     [1, "INVALID PARAMS | No keys pairs", _filename] call A3A_fnc_log;

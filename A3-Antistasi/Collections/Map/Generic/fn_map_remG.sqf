@@ -1,6 +1,6 @@
 /*
 Function:
-    col_map_fnc_remG
+    col_fnc_map_remG
 
 Description:
     1. Removes specified keys in a UID entry;
@@ -26,11 +26,11 @@ Returns:
 Examples:
     private _keys = ["test","420"];
     private _UID = "123";
-    [_UID,_keys] call col_map_fnc_remG; // Removes keys "test" and "frost" in UID "123"
-    [_UID,[]] call col_map_fnc_remG;    // Removes UID "123" and all it's keys from Map Namespace Generic
+    [_UID,_keys] call col_fnc_map_remG; // Removes keys "test" and "frost" in UID "123"
+    [_UID,[]] call col_fnc_map_remG;    // Removes UID "123" and all it's keys from Map Namespace Generic
 
 Author: Caleb Serafin
-Date Updated: 12 June 2020
+Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 #include "..\..\defines.hpp"
@@ -38,7 +38,7 @@ params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keys",[],[ [] ]]
 ];
-private _filename = "Collections\Map\Generic\remG.sqf";
+private _filename = "Collections\Map\Generic\map_remG.sqf";
 
 if (typeName _UID == "OBJECT" && {isPlayer _UID}) then {
     _UID = getPlayerUID _UID;

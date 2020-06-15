@@ -1,6 +1,6 @@
 /*
 Function:
-    col_map_fnc_getG
+    col_fnc_map_getG
 
 Description:
     1. Gets values of specified keys in a UID entry;
@@ -40,9 +40,9 @@ Returns "INVALID PARAMS":
 Examples:
     private _keyPairs = [ ["test",0], ["420",0] ];
     private _UID = "123";
-    [_UID,_keyPairs] call col_map_fnc_getG; // Return values from key "test" and "420" with default as 0, in UID "123"
-    [_UID,[]] call col_map_fnc_getG;        // Return all [key,value]s in UID "123"
-    ["",[]] call col_map_fnc_getG;          // Return all UID strings
+    [_UID,_keyPairs] call col_fnc_map_getG; // Return values from key "test" and "420" with default as 0, in UID "123"
+    [_UID,[]] call col_fnc_map_getG;        // Return all [key,value]s in UID "123"
+    ["",[]] call col_fnc_map_getG;          // Return all UID strings
 
 Author: Caleb Serafin
 Date Updated: 12 June 2020
@@ -53,7 +53,7 @@ params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keyPairs",[],[ [] ]]
 ];
-private _filename = "Collections\Map\Generic\addG.sqf";
+private _filename = "Collections\Map\Generic\map_addG.sqf";
 
 if (typeName _UID == "OBJECT" && {isPlayer _UID}) then {
     _UID = getPlayerUID _UID;

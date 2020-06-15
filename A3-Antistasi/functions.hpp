@@ -542,14 +542,14 @@ class A3A
 		class getRoadDirection {};
 	};
 };
-class col_map
+class col
 {
 	class Collections_Map_Generic
 	{
 		file = "Collections\Map\Generic";
-		class getG {};
-		class setG {};
-		class remG {};
-		class namespaceG {};
+		class map_getG {};
+		class map_setG {};
+		class map_remG {};
+		class map_namespaceG {};
 	};
 };
