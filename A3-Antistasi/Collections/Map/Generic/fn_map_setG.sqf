@@ -27,7 +27,7 @@ Author: Caleb Serafin
 Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
-#include "..\..\defines.hpp"
+#include "..\..\col_defines.hpp"
 params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keyPairs",[],[ [] ]]

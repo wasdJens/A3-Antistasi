@@ -25,7 +25,7 @@ Author: Caleb Serafin
 Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
-#include "..\..\defines.hpp"
+#include "..\..\col_defines.hpp"
 private _filename = "Collections\Map\Generic\map_namespaceG.sqf";
 
 private _namespaceG = missionNamespace getVariable [COLLECTIONS_NAMESPACE_MAP_GENERIC,objNull];
