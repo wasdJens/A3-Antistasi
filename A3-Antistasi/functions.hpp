@@ -552,4 +552,13 @@ class col
 		class map_remG {};
 		class map_namespaceG {};
 	};
+	class Collections_Map
+	{
+		file = "Collections\Map";
+		//class map_get {};
+		//class map_set {};
+		//class map_rem {};
+		class map_namespace {};
+		class map_namespace_scan {};
+	};
 };
