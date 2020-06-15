@@ -43,7 +43,7 @@ private _filename = "Collections\Map\Generic\remG.sqf";
 if (typeName _UID == "OBJECT" && {isPlayer _UID}) then {
     _UID = getPlayerUID _UID;
 };
-if (typeName _UID != "STRING" || {_UID in ["",COLLECTIONS_NAMESPACE_META]}) exitWith {
+if (typeName _UID != "STRING" || {_UID in ["",COLLECTIONS_META]}) exitWith {
     [1, format ["INVALID PARAMS | _UID=""%1""", _UID], _filename] call A3A_fnc_log;
     false;
 };

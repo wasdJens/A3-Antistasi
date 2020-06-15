@@ -31,10 +31,10 @@ private _filename = "Collections\Map\Generic\namespaceG.sqf";
 private _namespaceG = missionNamespace getVariable [COLLECTIONS_NAMESPACE_MAP_GENERIC,objNull];
 
 if (isNull _namespaceG) then {
-    private _namespaces = allSimpleObjects ["logic"] select {(_x getVariable [ COLLECTIONS_NAMESPACE_META ,""]) isEqualTo COLLECTIONS_NAMESPACE_MAP_GENERIC};
+    private _namespaces = allSimpleObjects ["logic"] select {(_x getVariable [ COLLECTIONS_META ,""]) isEqualTo COLLECTIONS_NAMESPACE_MAP_GENERIC};
     if (_namespaces isEqualTo []) then {
         _namespaceG = createSimpleObject ["Logic", [0,0,0]];
-        _namespaceG setVariable [COLLECTIONS_NAMESPACE_META, COLLECTIONS_NAMESPACE_MAP_GENERIC, true];
+        _namespaceG setVariable [COLLECTIONS_META, COLLECTIONS_NAMESPACE_MAP_GENERIC, true];
     } else {
         _namespaceG = _namespaces select 0;
     };
