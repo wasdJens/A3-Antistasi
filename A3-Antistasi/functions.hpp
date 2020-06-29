@@ -549,9 +549,9 @@ class col
 		class map_remG {};
 		class map_namespaceG {};
 
-		//class map_get {};
-		//class map_set {};
-		//class map_rem {};
+		class map_get {};
+		class map_set {};
+		class map_rem {};
 		class map_namespace {};
 		class map_namespaceL {};
 		class map_isGlobal {};

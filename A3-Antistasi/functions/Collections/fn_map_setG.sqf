@@ -32,7 +32,7 @@ params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keyPairs",[],[ [] ]]
 ];
-private _filename = "Collections\fn_Generic\map_setG.sqf";
+private _filename = "Collections\fn_map_setG.sqf";
 
 if (_keyPairs isEqualTo []) exitWith {
     [1, "INVALID PARAMS | No keys pairs", _filename] call A3A_fnc_log;
