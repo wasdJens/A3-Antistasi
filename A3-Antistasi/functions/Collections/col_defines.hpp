@@ -6,7 +6,7 @@ Description:
     Containse macros for Collections
 
 Examples:
-    #include "Collections\defines.hpp"
+    #include "col_defines.hpp"
 
 Author: Caleb Serafin
 Date Updated: 11 June 2020
