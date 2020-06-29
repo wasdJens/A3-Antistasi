@@ -20,7 +20,7 @@ Returns:
     <OBJECT> (SIMPLE)("Logic") Map Namespace
 
 Examples:
-    private _data_namespace = call col_fnc_map_namespace; // Gets namespace for getVariable and setVariable
+    private _data_namespace = ["123",true] call col_fnc_map_namespace; // Gets namespace for getVariable and setVariable
 
 Author: Caleb Serafin
 Date Updated: June 2020
