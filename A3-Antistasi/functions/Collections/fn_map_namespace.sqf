@@ -28,7 +28,7 @@ License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Comm
 */
 #include "..\col_defines.hpp"
 params [ ["_name","",[""]], ["_scanObjects",false,[false]] ];
-private _filename = "Collections\Map\map_namespace.sqf";
+private _filename = "Collections\fn_map_namespace.sqf";
 
 private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
 private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};

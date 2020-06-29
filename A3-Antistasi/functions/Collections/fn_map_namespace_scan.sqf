@@ -28,9 +28,9 @@ Author: Caleb Serafin
 Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
-#include "..\col_defines.hpp"
+#include "col_defines.hpp"
 params [ ["_name","",[""]] ];
-private _filename = "Collections\Map\map_namespace.sqf";
+private _filename = "Collections\fn_map_namespace.sqf";
 
 private _allSimpleObjects = allSimpleObjects ["logic"];
 private _namespaceIndex =  _allSimpleObjects findIf {(_x getVariable [ COLLECTIONS_META ,""]) isEqualTo _name};

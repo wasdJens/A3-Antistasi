@@ -25,7 +25,7 @@ Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 params [ ["_namespace",objNull,[objNull,locationNull]] ];
-private _filename = "Collections\Map\map_isGlobal.sqf";
+private _filename = "Collections\fn_map_isGlobal.sqf";
 
 switch (typeName _namespace) do {
 	case "OBJECT": { true };

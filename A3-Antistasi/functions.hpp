@@ -542,21 +542,19 @@ class A3A
 };
 class col
 {
-	class Collections_Map_Generic
+	class Collections
 	{
-		file = "Collections\Map\Generic";
 		class map_getG {};
 		class map_setG {};
 		class map_remG {};
 		class map_namespaceG {};
-	};
-	class Collections_Map
-	{
-		file = "Collections\Map";
+
 		//class map_get {};
 		//class map_set {};
 		//class map_rem {};
 		class map_namespace {};
+		class map_namespaceL {};
+		class map_isGlobal {};
 		class map_namespace_scan {};
 	};
 };

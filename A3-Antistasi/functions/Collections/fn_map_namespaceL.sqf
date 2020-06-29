@@ -25,9 +25,9 @@ Author: Caleb Serafin
 Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
-#include "..\col_defines.hpp"
+#include "col_defines.hpp"
 params [ ["_name","",[""]] ];
-private _filename = "Collections\Map\map_namespaceL.sqf";
+private _filename = "Collections\fn_map_namespaceL.sqf";
 
 private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
 private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};

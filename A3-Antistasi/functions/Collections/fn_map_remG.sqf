@@ -33,12 +33,12 @@ Author: Caleb Serafin
 Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
-#include "..\..\col_defines.hpp"
+#include "col_defines.hpp"
 params [
     ["_UID",objNull,["UID string",objNull]],
     ["_keys",[],[ [] ]]
 ];
-private _filename = "Collections\Map\Generic\map_remG.sqf";
+private _filename = "Collections\fn_Generic\map_remG.sqf";
 
 if (typeName _UID == "OBJECT" && {isPlayer _UID}) then {
     _UID = getPlayerUID _UID;
