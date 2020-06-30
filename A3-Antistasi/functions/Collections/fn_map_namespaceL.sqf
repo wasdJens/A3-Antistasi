@@ -32,7 +32,7 @@ private _filename = "Collections\fn_map_namespaceL.sqf";
 private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
 private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};
 
-if (!_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
+if !(_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
 	(_namespaceKeyPairs # _namespaceIndex) # 1;
 } else {
 	private _newNamespace = createLocation ["Invisible", [0,0,0]];

@@ -69,7 +69,7 @@ if (typeName _bucket isEqualTo "OBJECT") exitWith {
     };
 };
 if (_bucket isEqualTo COLLECTIONS_META) exitWith {
-    [1,format["INVALID PARAMS | Attempted deleting COLLECTIONS META from namespace ""%1""", _namespace_name] call A3A_fnc_log;
+    [1,format["INVALID PARAMS | Attempted deleting COLLECTIONS META from namespace ""%1""", _namespace_name]] call A3A_fnc_log;
     false;
 };
 if (typeName _keys isEqualTo "OBJECT") exitWith {
