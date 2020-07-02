@@ -19,7 +19,8 @@ if (_typeX == "AS") then
 	{
 	_sites = airportsX + citiesX + (controlsX select {!(isOnRoad getMarkerPos _x)});
 	_sites = _sites select {sidesX getVariable [_x,sideUnknown] != teamPlayer};
-	if ((count _sites > 0) and ({sidesX getVariable [_x,sideUnknown] == Occupants} count airportsX > 0)) then
+	private _CurrentOccupants = [Occupants,Invaders] select (gameMode isEqualTo 4);
+	if ((count _sites > 0) and ({sidesX getVariable [_x,sideUnknown] == _CurrentOccupants} count airportsX > 0)) then
 		{
 		//_potentials = _sites select {((getMarkerPos _x distance _posbase < distanceMission) and (not(spawner getVariable _x)))};
 		for "_i" from 0 to ((count _sites) - 1) do
