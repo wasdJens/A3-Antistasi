@@ -35,8 +35,9 @@ private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};
 if !(_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
 	(_namespaceKeyPairs # _namespaceIndex) # 1;
 } else {
-	private _newNamespace = createLocation ["Invisible", [0,0,0]];
-	_newNamespace setVariable [COLLECTIONS_META, _name, false];
+	private _newNamespace = createLocation ["Invisible", [0,0,0], 0, 0];
+	_newNamespace setVariable [COLLECTIONS_META, _name];
 	_namespaceKeyPairs pushBack [_name,_newNamespace];
-	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,false];
+	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs];
+    _newNamespace;
 };
