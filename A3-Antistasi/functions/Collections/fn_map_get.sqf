@@ -37,18 +37,18 @@ params [
 ];
 private _filename = "Collections\fn_map_add.sqf";
 
-private _list = _namespace getVariable [_bucket, [] ];
+private _list = _namespace getVariable [_bucket, [] ]; // Passes reference to _list
 
 private _values = [];
 private _index = 0;
 private _pair = [];
 {
     _pair = _x;
-    _index = _list findIf {_x#0 == _pair#0};
-    if (_index > -1) then {
-        _values pushBack (_list#_index)#1;
+    _index = _list findIf {_x#0 isEqualTo _pair#0};
+    if (_index isEqualTo -1) then {
+        _values pushBack _pair#1;
     } else {
-        _values pushBack _x#1;
+        _values pushBack _list#_index#1;
     };
 } forEach _keyPairs;
 _values;

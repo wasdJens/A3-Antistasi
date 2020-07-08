@@ -38,18 +38,18 @@ params [
 private _filename = "Collections\fn_map_set.sqf";
 
 private _global = [_namespace] call col_fnc_map_isGlobal;
-private _list = _namespace getVariable [_bucket, [] ];
+private _list = _namespace getVariable [_bucket, [] ]; // Passes reference to _list
 
 private _index = 0;
 private _pair = [];
 {
     _pair = _x;
-    _index = _list findIf {(_x#0) == _pair#0};
-    if (_index > -1) then {
-        _list set [_index,_pair];
-    } else {
+    _index = _list findIf {_x#0 isEqualTo _pair#0};
+    if (_index isEqualTo -1) then {
         _list pushBack _pair;
+    } else {
+        _list set [_index,_pair];
     };
 } forEach _keyPairs;
-_namespace setVariable [_bucket, _list, _global];
+if(_global) then {_namespace setVariable [_bucket, _list, _global]}; // Although the global map is modified by reference, it will not propagate over network.
 true;
