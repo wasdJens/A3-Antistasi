@@ -61,9 +61,9 @@ if !(_namespace_name isEqualType "") exitWith {
 if (_bucket isEqualType objNull) exitWith {
     private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
     _namespaceKeyPairs deleteAt (_namespaceKeyPairs findIf {_x#0 isEqualTo _namespace_name});
-	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,_global];
     if (_global) then {
         deleteVehicle _namespace;
+	    missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,true];
     } else {
         deleteLocation _namespace;
     };
@@ -73,7 +73,11 @@ if (_bucket isEqualTo COLLECTIONS_META) exitWith {
     false;
 };
 if (_keys isEqualType objNull) exitWith {
-    _namespace setVariable [_bucket, nil, _global];
+    if (_global) then {
+        _namespace setVariable [_bucket, nil, true];
+    } else {
+        _namespace setVariable [_bucket, nil];
+    };
     true;
 };
 
@@ -83,5 +87,7 @@ private _key = "";
     _key = _x;
     _list deleteAt (_list findIf {_x#0 isEqualTo _key});
 } forEach _keys;
-_namespace setVariable [_bucket, _list, _global];
+if (_global) then {
+    _namespace setVariable [_bucket, _list, true];
+};
 true;
