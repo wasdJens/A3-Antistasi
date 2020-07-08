@@ -54,11 +54,11 @@ private _filename = "Collections\fn_map_rem.sqf";
 
 private _global = [_namespace] call col_fnc_map_isGlobal;
 private _namespace_name = _namespace getVariable [COLLECTIONS_META,objNull];
-if !((typeName _namespace_name) isEqualTo "STRING") exitWith {
+if !(_namespace_name isEqualType "") exitWith {
     [1,"INVALID PARAMS | Attempted deleting a non-Collections namespace"] call A3A_fnc_log;
     false;
 };
-if (typeName _bucket isEqualTo "OBJECT") exitWith {
+if (_bucket isEqualType objNull) exitWith {
     private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
     _namespaceKeyPairs deleteAt (_namespaceKeyPairs findIf {_x#0 isEqualTo _namespace_name});
 	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,_global];
@@ -72,7 +72,7 @@ if (_bucket isEqualTo COLLECTIONS_META) exitWith {
     [1,format["INVALID PARAMS | Attempted deleting COLLECTIONS META from namespace ""%1""", _namespace_name]] call A3A_fnc_log;
     false;
 };
-if (typeName _keys isEqualTo "OBJECT") exitWith {
+if (_keys isEqualType objNull) exitWith {
     _namespace setVariable [_bucket, nil, _global];
     true;
 };
@@ -81,7 +81,7 @@ private _list = _namespace getVariable [_bucket, [] ];
 private _key = "";
 {
     _key = _x;
-    _list deleteAt (_list findIf {(_x#0) == _key});
+    _list deleteAt (_list findIf {_x#0 isEqualTo _key});
 } forEach _keys;
 _namespace setVariable [_bucket, _list, _global];
 true;
