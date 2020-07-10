@@ -544,11 +544,6 @@ class col
 {
 	class Collections
 	{
-		class map_getG {};
-		class map_setG {};
-		class map_remG {};
-		class map_namespaceG {};
-
 		class map_get {};
 		class map_set {};
 		class map_rem {};
