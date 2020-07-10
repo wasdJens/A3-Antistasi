@@ -38,7 +38,7 @@ params [
 private _filename = "Collections\fn_map_set.sqf";
 
 private _global = [_namespace] call col_fnc_map_isGlobal;
-private _list = _namespace getVariable [_bucket, [] ]; // Passes reference to _list
+private _list = _namespace getVariable [_bucket, [] ]; // Passes reference to _list // Somehow modifying this reference isn't slower than copying.
 private _initialise = _list isEqualTo [];
 
 private _index = 0;
@@ -52,7 +52,7 @@ private _pair = [];
         _list set [_index,_pair];
     };
 } forEach _keyPairs;
-//if !(_initialise || _global) exitWith { true };
+if !(_initialise || _global) exitWith { true };
 if(_global) then {
     _namespace setVariable [_bucket, _list, true]; // Although the global map is modified by reference, it will not propagate over network.
 } else {
