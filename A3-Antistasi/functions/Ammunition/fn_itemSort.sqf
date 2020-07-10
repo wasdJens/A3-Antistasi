@@ -1,4 +1,4 @@
-if (teamPlayer == west) then {
+if (teamPlayer isEqualTo west) then {
 	diveGear append ["U_B_Wetsuit","V_RebreatherB","G_Diving"];
 } else {
 	diveGear append ["U_I_Wetsuit","V_RebreatherIA","G_Diving"];
