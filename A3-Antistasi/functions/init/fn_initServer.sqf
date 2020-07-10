@@ -88,7 +88,7 @@ call
 
 	// Otherwise, check through the saved game list for matches and build existing ID list
 	private _saveList = [profileNamespace getVariable "antistasiSavedGames"] param [0, [], [[]]];
-	private _gametype = if (teamPlayer == independent) then {"Greenfor"} else {"Blufor"};
+	private _gametype = if (side petros == independent) then {"Greenfor"} else {"Blufor"};
 	private _existingIDs = [campaignID];
 	{
 		if (_x isEqualType [] && {count _x >= 2}) then
