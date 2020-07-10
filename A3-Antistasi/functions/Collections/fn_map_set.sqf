@@ -6,6 +6,21 @@ Description:
     Sets key-Values in a bucket of a namespace;
     There are no safety checks. Make sure your data is verified.
 
+    1 items in 0.0332 ms
+    2 items in 0.0402 ms
+    4 items in 0.0545 ms
+    8 items in 0.105955 ms
+    16 items in 0.279799 ms
+    32 items in 0.738007 ms
+    64 items in 2.6178 ms
+    128 items in 9.80392 ms
+    256 items in 37.8889 ms
+    512 items in 152.143 ms
+    1024 items in 659 ms
+
+    y ~ 0.000663616x^2 -0.0377189x +1.10129;
+    R^2 = 0.9999;
+
 Scope:
     <ANY>
 
