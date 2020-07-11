@@ -23,7 +23,6 @@ Examples:
     private _data_namespace = ["123",true] call col_fnc_map_namespace; // Gets namespace for getVariable and setVariable
 
 Author: Caleb Serafin
-Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 #include "col_defines.hpp"

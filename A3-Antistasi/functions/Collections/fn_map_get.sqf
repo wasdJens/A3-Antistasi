@@ -27,7 +27,6 @@ Examples:
     [_namespace,_bucket,_keyPairs] call col_fnc_map_get; // Return values from key "test" and "420" with default as 0, in _bucket "123"
 
 Author: Caleb Serafin
-Date Updated: 12 June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 params [

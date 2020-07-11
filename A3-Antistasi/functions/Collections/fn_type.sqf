@@ -24,13 +24,10 @@ Examples:
     private _type = [ ["COL_MAP_KEYPAIR", [["test",5]] ] ] call col_fnc_type; // "COL_MAP_KEYPAIR"
 
 Author: Caleb Serafin
-Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 #include "col_defines.hpp"
-params [
-    ["_collection"]
-];
+params ["_collection"];
 private _filename = "Collections\fn_type.sqf";
 
 if !(_collection isEqualType []) exitWith {
@@ -38,8 +35,4 @@ if !(_collection isEqualType []) exitWith {
 };
 private _col_type = _collection # 0;
 if (isNil {_col_type}) exitWith {"ARRAY"};
-if (_col_type in COLLECTIONS_TYPES) then {
-	_col_type
-} else {
-	"ARRAY"
-};
+["ARRAY",_col_type] select (_col_type in COLLECTIONS_TYPES);

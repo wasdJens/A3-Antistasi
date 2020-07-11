@@ -42,7 +42,6 @@ Examples:
     [_namespace,_bucket,_keyPairs] call col_fnc_map_set; // In namespace:bucket "123":"123": Sets values of key "test" to "frost" and "420" to 69
 
 Author: Caleb Serafin
-Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 params [

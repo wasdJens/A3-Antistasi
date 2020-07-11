@@ -545,7 +545,9 @@ class col
 	class Collections
 	{
 		class type {};
-		class set {};
+		class add {};
+
+		class add_ARRAY {};
 
 		class map_get {};
 		class map_set {};

@@ -25,7 +25,6 @@ Examples:
     private _data_namespace = ["A3A_testVars"] call col_fnc_map_namespace_scan;
 
 Author: Caleb Serafin
-Date Updated: June 2020
 License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Community
 */
 #include "col_defines.hpp"
