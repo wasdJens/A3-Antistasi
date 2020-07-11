@@ -53,22 +53,22 @@ params [
 private _filename = "Collections\fn_map_rem.sqf";
 
 private _global = [_namespace] call col_fnc_map_isGlobal;
-private _namespace_name = _namespace getVariable [COLLECTIONS_META,objNull];
+private _namespace_name = _namespace getVariable [COLLECTIONS_ID,objNull];
 if !(_namespace_name isEqualType "") exitWith {
     [1,"INVALID PARAMS | Attempted deleting a non-Collections namespace"] call A3A_fnc_log;
     false;
 };
 if (_bucket isEqualType objNull) exitWith {
-    private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
+    private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_DB_LOGIC, [] ];
     _namespaceKeyPairs deleteAt (_namespaceKeyPairs findIf {_x#0 isEqualTo _namespace_name});
     if (_global) then {
         deleteVehicle _namespace;
-	    missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,true];
+	    missionNamespace setVariable [COLLECTIONS_DB_LOGIC,_namespaceKeyPairs,true];
     } else {
         deleteLocation _namespace;
     };
 };
-if (_bucket isEqualTo COLLECTIONS_META) exitWith {
+if (_bucket isEqualTo COLLECTIONS_ID) exitWith {
     [1,format["INVALID PARAMS | Attempted deleting COLLECTIONS META from namespace ""%1""", _namespace_name]] call A3A_fnc_log;
     false;
 };

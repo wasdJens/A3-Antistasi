@@ -30,7 +30,7 @@ License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Comm
 params [ ["_name","",[""]], ["_scanObjects",false,[false]] ];
 private _filename = "Collections\fn_map_namespace.sqf";
 
-private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
+private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_DB_LOGIC, [] ];
 private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};
 
 if !(_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
@@ -42,9 +42,9 @@ if !(_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
 	};
 	if (isNull _newNamespace) then {
 		_newNamespace = createSimpleObject ["Logic", [0,0,0]];
-		_newNamespace setVariable [COLLECTIONS_META, _name, true];
+		_newNamespace setVariable [COLLECTIONS_ID, _name, true];
 	};
 	_namespaceKeyPairs pushBack [_name,_newNamespace];
-	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs,true];
+	missionNamespace setVariable [COLLECTIONS_DB_LOGIC,_namespaceKeyPairs,true];
 	_newNamespace; // Return
 };

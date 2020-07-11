@@ -33,7 +33,7 @@ params [ ["_name","",[""]] ];
 private _filename = "Collections\fn_map_namespace.sqf";
 
 private _allSimpleObjects = allSimpleObjects ["logic"];
-private _namespaceIndex =  _allSimpleObjects findIf {(_x getVariable [ COLLECTIONS_META ,""]) isEqualTo _name};
+private _namespaceIndex =  _allSimpleObjects findIf {(_x getVariable [ COLLECTIONS_ID ,""]) isEqualTo _name};
 if (_namespaceIndex isEqualTo -1) then {
     objNull;
 } else {

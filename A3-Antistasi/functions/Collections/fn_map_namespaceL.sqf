@@ -29,15 +29,15 @@ License: MIT License, Copyright (c) 2019 Barbolani & The Official AntiStasi Comm
 params [ ["_name","",[""]] ];
 private _filename = "Collections\fn_map_namespaceL.sqf";
 
-private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_NAMESPACES, [] ];
+private _namespaceKeyPairs = missionNamespace getVariable [COLLECTIONS_DB_LOCATION, [] ];
 private _namespaceIndex = _namespaceKeyPairs findIf {_x#0 isEqualTo _name};
 
 if !(_namespaceIndex isEqualTo -1) then {	// Prioritise found namespaces
 	(_namespaceKeyPairs # _namespaceIndex) # 1;
 } else {
 	private _newNamespace = createLocation ["Invisible", [0,0,0], 0, 0];
-	_newNamespace setVariable [COLLECTIONS_META, _name];
+	_newNamespace setVariable [COLLECTIONS_ID, _name];
 	_namespaceKeyPairs pushBack [_name,_newNamespace];
-	missionNamespace setVariable [COLLECTIONS_NAMESPACES,_namespaceKeyPairs];
+	missionNamespace setVariable [COLLECTIONS_DB_LOCATION,_namespaceKeyPairs];
     _newNamespace;
 };
