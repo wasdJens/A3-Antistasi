@@ -33,21 +33,21 @@ class Params
           title = "Enable Server Membership";
           texts[] = {"Yes","No"};
           values[] = {1,0};
-          default = 1;
+          default = 0;
      };
      class switchComm
      {
           title = "Enable Commander Switch (highest ranked player)";
           values[] = {1,0};
           texts[] = {"Yes","No"};
-          default = 1;
+          default = 0;
      };
      class tkPunish
      {
           title = "Enable Teamkill Punish";
           values[] = {1,0};
           texts[] = {"Yes","No"};
-          default = 1;
+          default = 0;
      };
      class mRadius
      {
@@ -60,7 +60,7 @@ class Params
           title = "Allow PvP Slots";
           values[] = {1,0};
           texts[] = {"Yes","No"};
-          default = 1;
+          default = 0;
      };
      class pMarkers
      {
@@ -79,35 +79,35 @@ class Params
      class unlockItem
      {
           title = "Number of the same item required to unlock";
-          values[] = {15,25,40};
-          default = 25;
+          values[] = {10,15,25,40};
+          default = 10;
      };
      class memberOnlyMagLimit
      {
           title = "Number of magazines needed for guests to be able to use them";
           values[] = {10,20,30,40,50,60};
-          default = 40;
+          default = 10;
      };
      class civTraffic
      {
           title = "Rate of Civ Traffic";
           values[] = {0,1,2,3,4,6,8};
           texts[] = {"None","Very low","Low","Medium","High","Very high","JAM"};
-          default = 2;
+          default = 1;
      };
      class memberSlots
      {
           title = "Percentage of Reserved Slots for Members";
           values[] = {0,20,40,60,80,100};
           texts[] = {"None","20%","40%","60%","80%","All"};
-          default = 20;
+          default = 0;
      };
      class memberDistance
      {
           title = "Max distance non members can be from the closest member or HQ (they will be teleported to HQ after some timeout)";
           values[] = {4000,5000,6000,7000,8000,16000};
           texts[] = {"4 Kmts","5 Kmts","6 Kmts","7 Kmts","8 Kmts","Unlimited"};
-          default = 5000;
+          default = 16000;
      };
 	 class allowMembersFactionGarageAccess
      {
@@ -121,14 +121,14 @@ class Params
           title = "Max personal garage slots";
           texts[] = {"Unlimited", "2", "5", "10"};
           values[] = {0,2,5,10};
-          default = 2;
+          default = 0;
      };
      class allowFT
      {
           title = "Fast Travel Targets Allowed";
           values[] = {0,1};
           texts[] = {"Any friendly position","Only Airports & HQ"};
-          default = 1;
+          default = 0;
      };
      class napalmEnabled
      {
@@ -142,28 +142,28 @@ class Params
           title = "Delay After Leaving Before a Player Can Join Another Team";
           values[] = {0, 900, 1800, 3600};
           texts[] = {"No delay","15 minutes","30 minutes","60 minutes"};
-          default = 3600;
+          default = 0;
      };
      class unlockedUnlimitedAmmo
      {
           title = "Do Unlocked Weapons Automatically Unlock Their Standard Magazine?";
           values[] = {1,0};
           texts[] =  {"Yes","No"};
-          default = 0;
+          default = 1;
      };
      class allowGuidedLaunchers
      {
           title = "Should Guided Launchers become unlocked?";
           values[] = {1,0};
           texts[] =  {"Yes","No"};
-          default = 0;
+          default = 1;
      };
      class allowUnlockedExplosives
      {
           title = "Should Explosives become unlocked?";
           values[] = {1,0};
           texts[] =  {"Yes","No"};
-          default = 0;
+          default = 1;
      };
      class startWithLongRangeRadio
      {
@@ -296,21 +296,21 @@ class Params
 		title = "Decrease loot quantity as player count increases? (Yes is recommended for balance reasons)";
 		values[] = {0, 1};
 		texts[] = {"False", "True"};
-		default = 1;
+		default = 0;
 	 };
      class crateWepTypeMax
      {
           title = "Maximum Weapon Types in Crates";
           values[] = {0,2,4,6,8,12,16};
           texts[] = {"1","3","5","7","9","13","17"};
-          default = 9;
+          default = 5;
      };
      class crateWepNumMax
      {
           title = "Maximum Weapon Quantity in Crates";
           values[] = {0,1,3,5,8,10,15};
           texts[] = {"None","1","3","5","8","10","15"};
-          default = 8;
+          default = 10;
      };
      class Spacer1
      {
