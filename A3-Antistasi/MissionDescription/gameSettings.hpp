@@ -1,5 +1,5 @@
 respawn = "BASE";
-respawnDelay = 15;
+respawnDelay = 5;
 
 aiKills = 0;
 disabledAI = 1;
@@ -9,7 +9,7 @@ class Header
 {
 	gameType = CTI;
 	minplayers = 1;
-	maxplayers = 53;
+	maxplayers = 4;
 };
 
 class CfgTaskEnhancements
