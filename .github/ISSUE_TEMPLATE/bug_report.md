@@ -22,15 +22,18 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
 Version: 
+
+Did you make any changes to the code and if so, which changes:
+
 Map (specify if Altis Blufor): 
 
-[ ] LAN Hosted
-[ ] Private dedicated server
-[ ] Private dedicated server with Headless client(s)
-[ ] Community Server 1
-[ ] Community Server 2
-[ ] Community Test Server
-[ ] Community Test Server 2
+* [ ] LAN Hosted
+* [ ] Private dedicated server
+* [ ] Private dedicated server with Headless client(s)
+* [ ] Community Server 1
+* [ ] Community Server 2
+* [ ] Community Test Server
+* [ ] Community Test Server 2
 
 Modset:
     
