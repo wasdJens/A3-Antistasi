@@ -1,3 +1,5 @@
+#include "..\..\Includes\common.inc"
+FIX_LINE_NUMBERS()
 if (!isServer and hasInterface) exitWith{};
 private ["_markerX","_vehiclesX","_groups","_soldiers","_positionX","_pos","_size","_frontierX","_sideX","_cfg","_isFIA","_garrison","_antenna","_radiusX","_buildings","_mrk","_countX","_typeGroup","_groupX","_typeUnit","_typeVehX","_veh","_unit","_flagX","_boxX","_roads","_mrkMar","_vehicle","_vehCrew","_groupVeh","_dist","_road","_roadCon","_dirVeh","_bunker","_dir","_posF"];
 _markerX = _this select 0;
@@ -12,7 +14,7 @@ _soldiers = [];
 _positionX = getMarkerPos (_markerX);
 _pos = [];
 
-diag_log format ["[Antistasi] Spawning Outpost %1 (createAIOutposts.sqf)", _markerX];
+Debug_1("Spawning Outpost %1", _markerX);
 
 _size = [_markerX] call A3A_fnc_sizeMarker;
 
@@ -136,15 +138,30 @@ _flagX allowDamage false;
 [_flagX,"take"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX];
 _vehiclesX pushBack _flagX;
 
-private _ammoBoxType = if (_sideX == Occupants) then {NATOAmmoBox} else {CSATAmmoBox};
-private _ammoBox = _ammoBoxType createVehicle _positionX;
-[_ammoBox] spawn A3A_fnc_fillLootCrate;
-_ammoBox call jn_fnc_logistics_addAction;
-_vehiclesX pushBack _ammoBox;
+// Only create ammoBox if it's been recharged (see reinforcementsAI)
+private _ammoBox = if (garrison getVariable [_markerX + "_lootCD", 0] == 0) then
+{
+	private _ammoBoxType = if (_sideX == Occupants) then {NATOAmmoBox} else {CSATAmmoBox};
+	private _ammoBox = _ammoBoxType createVehicle _positionX;
+	// Otherwise when destroyed, ammoboxes sink 100m underground and are never cleared up
+	_ammoBox addEventHandler ["Killed", { [_this#0] spawn { sleep 10; deleteVehicle (_this#0) } }];
+	[_ammoBox] spawn A3A_fnc_fillLootCrate;
+	[_ammoBox] call A3A_fnc_logistics_addLoadAction;
+
+	if ((_markerX in seaports) and !A3A_hasIFA) then {
+		[_ammoBox] spawn {
+			sleep 1;    //make sure fillLootCrate finished clearing the crate
+			{
+				_this#0 addItemCargoGlobal [_x, round random [2,6,8]];
+			} forEach diveGear;
+		};
+	};
+	_ammoBox;
+};
 
 _roads = _positionX nearRoads _size;
 
-if ((_markerX in seaports) and !hasIFA) then
+if ((_markerX in seaports) and !A3A_hasIFA) then
 {
 	_typeVehX = if (_sideX == Occupants) then {vehNATOBoat} else {vehCSATBoat};
 	if ([_typeVehX] call A3A_fnc_vehAvailable) then
@@ -153,7 +170,7 @@ if ((_markerX in seaports) and !hasIFA) then
 		if(count _mrkMar > 0) then
 		{
 			_pos = (getMarkerPos (_mrkMar select 0)) findEmptyPosition [0,20,_typeVehX];
-			_vehicle=[_pos, 0,_typeVehX, _sideX] call bis_fnc_spawnvehicle;
+			_vehicle=[_pos, 0,_typeVehX, _sideX] call A3A_fnc_spawnVehicle;
 			_veh = _vehicle select 0;
 			[_veh, _sideX] call A3A_fnc_AIVEHinit;
 			_vehCrew = _vehicle select 1;
@@ -166,13 +183,9 @@ if ((_markerX in seaports) and !hasIFA) then
 		}
 		else
 		{
-			diag_log format ["createAIOutposts: Could not find seaSpawn marker on %1!", _markerX];
+			Error_1("Could not find seaSpawn marker on %1!", _markerX);
 		};
 	};
-	sleep 1;    //make sure fillLootCrate finished clearing the crate
-	{
-		 _ammoBox addItemCargoGlobal [_x, round random [2,6,8]];
-	} forEach diveGear;
 }
 else
 {
@@ -248,7 +261,9 @@ if (_spawnParameter isEqualType []) then
 {
 	_typeVehX = if (_sideX == Occupants) then
 	{
-		if (!_isFIA) then {vehNATOTrucks + vehNATOCargoTrucks} else {[vehFIATruck]};
+		private _types = if (!_isFIA) then {vehNATOTrucks + vehNATOCargoTrucks} else {[vehFIATruck]};
+		_types = _types select { _x in vehCargoTrucks };
+		if (count _types == 0) then { vehNATOCargoTrucks } else { _types };
 	}
 	else
 	{
@@ -346,3 +361,11 @@ deleteMarker _mrk;
 		else { if !(_x isKindOf "StaticWeapon") then { [_x] spawn A3A_fnc_VEHdespawner } };
 	};
 } forEach _vehiclesX;
+
+// If loot crate was stolen, set the cooldown
+if (!isNil "_ammoBox") then {
+	if ((alive _ammoBox) and (_ammoBox distance2d _positionX < 100)) exitWith { deleteVehicle _ammoBox };
+	if (alive _ammoBox) then { [_ammoBox] spawn A3A_fnc_VEHdespawner };
+	private _lootCD = 120*16 / ([_markerX] call A3A_fnc_garrisonSize);
+	garrison setVariable [_markerX + "_lootCD", _lootCD, true];
+};

@@ -1,11 +1,16 @@
-private _filename = "fn_saveLoop";
+#include "..\..\Includes\common.inc"
+FIX_LINE_NUMBERS()
 if (!isServer) exitWith {
-	[1, "Miscalled server-only function", _filename] call A3A_fnc_log;
+    Error("Miscalled server-only function");
 };
 
 if (savingServer) exitWith {["Save Game", "Server data save is still in progress"] remoteExecCall ["A3A_fnc_customHint",theBoss]};
 savingServer = true;
-[2, "Starting persistent save", _filename] call A3A_fnc_log;
+Info("Starting persistent save");
+["Persistent Save Starting","Starting persistent save..."] remoteExec ["A3A_fnc_customHint",0,false];
+
+// Set next autosave time, so that we won't run another shortly after a manual save
+autoSaveTime = time + autoSaveInterval;
 
 // Save each player with global flag
 {
@@ -29,11 +34,17 @@ if (_saveIndex == -1) then {
 // Update the legacy campaign ID store
 profileNamespace setVariable ["ss_campaignID", campaignID];
 
+// Save persistent global variables defined in initParam
+private _savedParams = A3A_paramTable apply { [_x#0, missionNameSpace getVariable _x#0] };
+Debug_1("Saving params: %1", _savedParams);
+["params", _savedParams] call A3A_fnc_setStatVariable;
+
 private ["_garrison"];
+["version", antistasiVersion] call A3A_fnc_setStatVariable;
 ["attackCountdownOccupants", attackCountdownOccupants] call A3A_fnc_setStatVariable;
 ["attackCountdownInvaders", attackCountdownInvaders] call A3A_fnc_setStatVariable;
-["gameMode", gameMode] call A3A_fnc_setStatVariable;
-["difficultyX", skillMult] call A3A_fnc_setStatVariable;
+["gameMode", gameMode] call A3A_fnc_setStatVariable;					// backwards compatibility
+["difficultyX", skillMult] call A3A_fnc_setStatVariable;				// backwards compatibiiity
 ["bombRuns", bombRuns] call A3A_fnc_setStatVariable;
 ["smallCAmrk", smallCAmrk] call A3A_fnc_setStatVariable;
 ["membersX", membersX] call A3A_fnc_setStatVariable;
@@ -47,10 +58,10 @@ private _antennasDeadPositions = [];
 ["dateX", date] call A3A_fnc_setStatVariable;
 ["skillFIA", skillFIA] call A3A_fnc_setStatVariable;
 ["destroyedSites", destroyedSites] call A3A_fnc_setStatVariable;
-["distanceSPWN", distanceSPWN] call A3A_fnc_setStatVariable;
-["civPerc", civPerc] call A3A_fnc_setStatVariable;
+["distanceSPWN", distanceSPWN] call A3A_fnc_setStatVariable;		// backwards compatibility
+["civPerc", civPerc] call A3A_fnc_setStatVariable;					// backwards compatibility
 ["chopForest", chopForest] call A3A_fnc_setStatVariable;
-["maxUnits", maxUnits] call A3A_fnc_setStatVariable;
+["maxUnits", maxUnits] call A3A_fnc_setStatVariable;				// backwards compatibility
 ["nextTick", nextTick - time] call A3A_fnc_setStatVariable;
 ["weather",[fogParams,rain]] call A3A_fnc_setStatVariable;
 private _destroyedPositions = destroyedBuildings apply { getPosATL _x };
@@ -71,7 +82,7 @@ _vehInGarage = _vehInGarage + vehInGarage;
 	if ((_friendX getVariable ["spawner",false]) and (side group _friendX == teamPlayer))then {
 		if ((alive _friendX) and (!isPlayer _friendX)) then {
 			if (((isPlayer leader _friendX) and (!isMultiplayer)) or (group _friendX in (hcAllGroups theBoss)) and (not((group _friendX) getVariable ["esNATO",false]))) then {
-				_resourcesBackground = _resourcesBackground + (server getVariable [(typeOf _friendX),0]);
+				_resourcesBackground = _resourcesBackground + (server getVariable [(_friendX getVariable "unitType"),0]);
 				_backpck = backpack _friendX;
 				if (_backpck != "") then {
 					switch (_backpck) do {
@@ -107,9 +118,9 @@ _arrayEst = [];
 {
 	_veh = _x;
 	_typeVehX = typeOf _veh;
-	if ((_veh distance getMarkerPos respawnTeamPlayer < 50) and !(_veh in staticsToSave) and !(_typeVehX in ["ACE_SandbagObject","Land_PaperBox_01_open_boxes_F","Land_PaperBox_01_open_empty_F"])) then {
+	if ((_veh distance getMarkerPos respawnTeamPlayer < 50) and !(_veh in staticsToSave) and !(_typeVehX in ["ACE_SandbagObject","Land_FoodSacks_01_cargo_brown_F","Land_Pallet_F"])) then {
 		if (((not (_veh isKindOf "StaticWeapon")) and (not (_veh isKindOf "ReammoBox")) and (not (_veh isKindOf "ReammoBox_F")) and (not (_veh isKindOf "FlagCarrier")) and (not(_veh isKindOf "Building"))) and (not (_typeVehX == "C_Van_01_box_F")) and (count attachedObjects _veh == 0) and (alive _veh) and ({(alive _x) and (!isPlayer _x)} count crew _veh == 0) and (not(_typeVehX == "WeaponHolderSimulated"))) then {
-			_posVeh = getPos _veh;
+			_posVeh = getPosWorld _veh;
 			_xVectorUp = vectorUp _veh;
 			_xVectorDir = vectorDir _veh;
 			_arrayEst pushBack [_typeVehX,_posVeh,_xVectorUp,_xVectorDir];
@@ -121,7 +132,7 @@ _sites = markersX select {sidesX getVariable [_x,sideUnknown] == teamPlayer};
 {
 	_positionX = position _x;
 	if ((alive _x) and !(surfaceIsWater _positionX) and !(isNull _x)) then {
-		_arrayEst pushBack [typeOf _x,getPosATL _x,getDir _x];
+		_arrayEst pushBack [typeOf _x,getPosWorld _x,vectorUp _x, vectorDir _x];
 	};
 } forEach staticsToSave;
 
@@ -150,7 +161,7 @@ _garrison = [];
 _wurzelGarrison = [];
 
 {
-	_garrison pushBack [_x,garrison getVariable [_x,[]]];
+	_garrison pushBack [_x,garrison getVariable [_x,[]],garrison getVariable [_x + "_lootCD", 0]];
 	_wurzelGarrison pushBack [
 		_x,
 		garrison getVariable [format ["%1_garrison",_x], []],
@@ -195,12 +206,10 @@ _arrayOutpostsFIA = [];
 if (!isDedicated) then {
 	_typesX = [];
 	{
-		if ([_x] call BIS_fnc_taskExists) then {
-			_state = [_x] call BIS_fnc_taskState;
-			if (_state == "CREATED") then {
-				_typesX pushBackUnique _x;
-			};
-		};
+		private _type = _x;
+		private _index = A3A_tasksData findIf { (_x#1) isEqualTo _type and (_x#2) isEqualTo "CREATED" };
+		if (_index != -1) then { _typesX pushBackUnique _type };
+
 	} forEach ["AS","CON","DES","LOG","RES","CONVOY","DEF_HQ","rebelAttack","invaderPunish"];
 
 	["tasks",_typesX] call A3A_fnc_setStatVariable;
@@ -230,8 +239,11 @@ _dataX = [];
 _controlsX = controlsX select {(sidesX getVariable [_x,sideUnknown] == teamPlayer) and (controlsX find _x < defaultControlIndex)};
 ["controlsSDK",_controlsX] call A3A_fnc_setStatVariable;
 
+//Saving the state of the testing timer
+["testingTimerIsActive", testingTimerIsActive] call A3A_fnc_setStatVariable;
+
 saveProfileNamespace;
 savingServer = false;
-_saveHintText = format ["Savegame Done.<br/><br/>You won't lose your stats in the event of a game update.<br/><br/>Remember: if you want to preserve any vehicle, it must be near the HQ Flag with no AI inside.<br/>If AI are inside, you will save the funds you spent on it.<br/><br/>AI will be refunded<br/><br/>Stolen and purchased Static Weapons need to be ASSEMBLED in order to be saved. You can save disassembled Static Weapons in the ammo box.<br/><br/>Mounted Statics (Mortar/AA/AT squads) won't get saved, but you will be able to recover the cost.<br/><br/>Same for assigned vehicles more than 50m away from HQ.<br/><br/>%1 fund count:<br/>HR: %2<br/>Money: %3 €",nameTeamPlayer,_hrBackground,_resourcesBackground];
-[petros,"hint",_saveHintText, "Save"] remoteExec ["A3A_fnc_commsMP", 0];
-[2, "Persistent Save Completed", _filename] call A3A_fnc_log;
+_saveHintText = ["<t size='1.5'>",nameTeamPlayer," Assets:<br/><t color='#f0d498'>HR: ",str _hrBackground,"<br/>Money: ",str _resourcesBackground," €</t></t><br/><br/>Further infomation is provided in <t color='#f0d498'>Map Screen > Game Options > Persistent Save-game</t>."] joinString "";
+["Persistent Save Completed",_saveHintText] remoteExec ["A3A_fnc_customHint",0,false];
+Info("Persistent Save Completed");
